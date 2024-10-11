@@ -1,0 +1,49 @@
+﻿@using Hello.ViewModels
+@model LopHocViewModel
+<table class="table table-bordered bg-white text-black">
+    <tr class="table-success text-center">
+        <th>STT</th>
+        <th>Tên Lớp</th>
+        <th>Phòng học</th>
+        <th>Thao tác</th>
+    </tr>
+    @{
+        int index = 0;
+    }
+    @if (Model.listLopHoc != null)
+    {
+        foreach (var lop in Model.listLopHoc)
+        {
+            index++;
+            <tr>
+                <td>@index</td>
+                <td><a asp-action="ChuyenTrang" asp-route-id="@lop.MaLopHoc">@lop.TenLopHoc</a></td>
+                <td>@lop.PhongHoc</td>
+                <td>
+                    <button onclick="loadChitietLophoc(@lop.MaLopHoc)" class="btn btn-secondary">Chi tiết lớp học</button>
+                    <a asp-action="ChuyenTrang" asp-route-id="@lop.MaLopHoc" class="btn btn-success">Xem DS Sinh Viên</a>
+                    <a asp-action="Sua" asp-route-id="@lop.MaLopHoc" class="btn btn-info"> <i class="fa fa-edit"></i> Sửa</a>
+                    <button data-bs-toggle="modal" data-bs-target="#delete_@lop.MaLopHoc" class="btn btn-danger"><i class="far fa-trash-alt"></i>&nbspXóa</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="delete_@lop.MaLopHoc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa:</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Xóa @lop.TenLopHoc
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                    <a asp-action="Xoa" asp-route-id="@lop.MaLopHoc" class="btn btn-primary">Yes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    }
+</table>
